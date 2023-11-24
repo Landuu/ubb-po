@@ -2,12 +2,15 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
 
-image_path = 'images2/photo.jpg'
+image_path = 'images3/kwadratowe_ranczo.jpg'
+maska_path = 'images3/kwadratowe_ranczo_maska.jpg'
 
-def first():
+def segmentacja_progowanie():
     # Wczytaj obraz do analizy
-    image = cv2.imread('images2/photo.jpg', cv2.IMREAD_GRAYSCALE)
+    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
     # Algorytm progowania globalnego
     _, global_thresholded = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
@@ -41,7 +44,7 @@ def first():
     plt.show()
 
 
-def second():
+def segmentacja_ksztalty():
     # Wczytaj obraz do analizy (upewnij się, że obraz zawiera obiekty o różnych kształtach)
     image = cv2.imread(image_path, cv2.IMREAD_COLOR)
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -78,13 +81,11 @@ def second():
     plt.tight_layout()
     plt.show()
 
-
-
-def third():
+def si():
     # Wczytaj obraz do segmentacji
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     # Wczytaj oznaczenia pikseli na obrazie (maskę segmentacji)
-    segmentation_mask = cv2.imread('maska_segmentacji.jpg', cv2.IMREAD_GRAYSCALE)
+    segmentation_mask = cv2.imread(maska_path, cv2.IMREAD_GRAYSCALE)
     # Przygotowanie danych treningowych
     height, width = image.shape
     X = np.column_stack((np.arange(height), np.arange(width)))
@@ -113,4 +114,4 @@ def third():
     plt.show()
 
 
-third()
+
